@@ -1,0 +1,10 @@
+# Excluimos el repositorio Git
+.git
+
+# Excluimos workflows de CI/CD
+.github
+
+# Excluimos archivos de orquestación y documentación
+docker-compose.yml
+k8s
+README.md

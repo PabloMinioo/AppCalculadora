@@ -1,15 +1,14 @@
-# Utilizamos la última imagen de NGINX
-FROM nginx:latest
+# Imagen NGINX
+FROM nginx:alpine
 
-# Copiamos los archivos de nuestro Workspace a la imagen
-COPY . /usr/share/nginx/html/
+# Copiamos los archivos de la aplicación
+COPY app/ /usr/share/nginx/html/
 
-# Copiamos el archivo de configuración personalizado al contenedor
-COPY config.conf /etc/nginx/conf.d/default.conf
+# Copiamos la configuración personalizada de NGINX
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
-# Exponemos el puerto 80
+# Exponemos el puerto 80 dentro del contenedor
 EXPOSE 80
 
-# Ejecutamos el comando "nginx" para iniciar el servidor.
-# Con "daemon off" se ejecuta en primer plano
+# Ejecutamos NGINX en primer plano
 CMD ["nginx", "-g", "daemon off;"]
