@@ -66,4 +66,7 @@ kubectl port-forward --address 0.0.0.0 service/calculadora-service 8080:80
 ```
 
 ## Funcionamiento de la imagen  
-Para usar la aplicación, escribimos en nuestro navegador "localhost:8080".
+En nuestro navegador
+```
+localhost:8080
+```
