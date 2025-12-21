@@ -1,16 +1,69 @@
-# Desafio14 - Bootcamp - Calculadora
+# Calculadora Web – Docker, Docker Compose & Kubernetes
+
+Este proyecto es una **aplicación web estática (HTML + NGINX)** containerizada y desplegada utilizando distintas herramientas de orquestación y automatización.
+El objetivo principal del repositorio es **demostrar conocimientos prácticos de DevOps**, cubriendo el flujo completo desde el código hasta el despliegue en Kubernetes.
+
+---
+
+## Tecnologías utilizadas
+
+- Docker  
+- Docker Compose  
+- GitHub Actions (CI/CD)  
+- Docker Hub  
+- Kubernetes  
+- Minikube  
+- NGINX  
+- HTML / CSS / JavaScript  
+- Vagrant (VM local)
 
 ## Imagen "Calculadora"  
-La aplicación es una calculadora creada en HTML. Es una calculadora simple, le ingresamos dos valores, elegimos la operación que deseamos (suma, resta, multiplicar y dividir), hacemos clic en el botón “calcular” y nos devolverá el resultado de la cuenta. En la siguiente imagen se observará un ejemplo, donde sumaremos los valores 25 y 50.
+
+La aplicación es una calculadora creada en HTML.  
+Es una calculadora simple: se ingresan dos valores, se elige la operación deseada (suma, resta, multiplicación o división), se hace clic en el botón **“Calcular”** y se obtiene el resultado de la cuenta.
+
+En la siguiente imagen se muestra un ejemplo donde se suman los valores **25** y **50**.
 
 ![Calculadora](https://github.com/PabloMinio/desafio14/assets/81270459/853c4ecd-f1b4-4fdf-bbd4-8ced39dc8fe1)
 
-## Instalar imagen
+## Instalar y ejecutar imagen con Docker
 
-Para instalar la imagen ejecutamos los siguentes comandos:  
-  •	*docker build -t calculadora .*: Creamos la imagen con el nombre "calculadora".    
-  •	*docker run -dp 8080:80 calculadora*: Ejecutamos la imagen en segundo plano (“d”) y en los puertos 8080:80 (“p”).    
-  •	*docker ps*: Verificamos si la imagen está ejecutándose.
+1) Buildeamos la imagen
+```
+docker build -t calculadora .
+```
+2) Ejecutamos la imagen
+```
+docker run -dp 8080:80 calculadora
+```
+3) Verificamos la imagen
+```
+docker ps
+```
 
- ## Funcionamiento de la imagen  
- Para usar la aplicación, escribimos en nuestro navegador "localhost:8080".
+## Instalar y ejecutar imagen con Docker Compose
+
+Esta opción utiliza una imagen publicada en Docker Hub, construida automáticamente mediante GitHub Actions.
+```
+docker compose up -d
+```
+
+## Desplegar con Kubernetes
+
+El despliegue en Kubernetes está pensado para un entorno local, ejecutándose sobre Minikube dentro de una VM.
+
+1) Iniciamos Minikube
+```
+minikube start
+```
+2) Aplicamos los Manifests
+```
+kubectl apply -f k8s/
+```
+3) Exponemos el servicio
+```
+kubectl port-forward --address 0.0.0.0 service/calculadora-service 8080:80
+```
+
+## Funcionamiento de la imagen  
+Para usar la aplicación, escribimos en nuestro navegador "localhost:8080".
