@@ -1,13 +1,11 @@
-version: "3.8"
-
 services:
   # APLICACION
   calculadora-app:
     build:
-     context: 
+     context: .
      dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "80:80"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost"]
       interval: 30s
