@@ -1,24 +1,32 @@
+volumes:
+  prometheus_data:
+  grafana_data:
+
 services:
-  # APLICACION
+  # APP
   calculadora-app:
     build:
-     context: .
-     dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "80:80"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      - "8080:80"
 
   # PROMETHEUS
   prometheus:
     image: prom/prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
     ports:
       - "9090:9090"
+
+  # GRAFANA
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "3000:3000"
 
   # NODE EXPORTER
   node-exporter:
@@ -26,11 +34,15 @@ services:
     ports:
       - "9100:9100"
 
-  # GRAFANA
-  grafana:
-    image: grafana/grafana
+  # CADVISOR
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
     ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - "8081:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+
