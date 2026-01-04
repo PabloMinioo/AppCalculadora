@@ -1,19 +1,38 @@
 version: "3.8"
 
 services:
-  # Servicio que ejecuta la aplicación web
+  # APLICACION
   calculadora-app:
-
-    # Imagen publicada en DockerHub mediante GitHub Actions
-    image: pabloagustinm/calculadora:uploadAuto
-
-    # Mapeo de puertos:
+    build:
+     context: 
+     dockerfile: Dockerfile
     ports:
       - "8080:80"
-
-    # Healthcheck para verificar que la aplicación esté disponible
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost"]
       interval: 30s
       timeout: 10s
       retries: 3
+
+  # PROMETHEUS
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  # NODE EXPORTER
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - "9100:9100"
+
+  # GRAFANA
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin

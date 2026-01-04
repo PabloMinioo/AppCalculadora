@@ -2,7 +2,7 @@
 FROM nginx:alpine
 
 # Copiamos los archivos de la aplicación
-COPY app/ /usr/share/nginx/html/app.html
+COPY app/index.html /usr/share/nginx/html/index.html
 
 # Copiamos la configuración personalizada de NGINX
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
