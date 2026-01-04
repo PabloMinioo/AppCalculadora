@@ -34,7 +34,7 @@ docker build -t calculadora .
 ```
 2) Ejecutamos la imagen
 ```
-docker run -dp 8080:80 calculadora
+docker run -dp 80:80 calculadora
 ```
 3) Verificamos la imagen
 ```
